@@ -43,9 +43,12 @@ public class ItemsAdapter extends BaseAdapter {
 
             gridView = new View(context);
 
-            // get layout from resources             gridView = inflater.inflate(R.layout.item, null);
+            // get layout from resources
+            gridView = inflater.inflate(R.layout.item, null);
 
-            // set image based on selected text             Button btn = (Button) gridView.findViewById(R.id.myButton);             btn.setText(content.get(position));
+            // set image based on selected text
+            Button btn = (Button) gridView.findViewById(R.id.myButton);
+            btn.setText(content.get(position));
 
             TextView textview = (TextView) gridView.findViewById(R.id.myText);
             textview.setText("Button " + position);
