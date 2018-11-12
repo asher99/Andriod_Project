@@ -15,12 +15,13 @@
         android:padding="25dp"
         android:verticalSpacing="10dp"
         tools:context="com.example.testapp.testapp.MainActivity"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="25dp"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteY="25dp">
 
 
         <EditText
+            style="@style/TextStyle1"
             android:id="@+id/myEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,6 +33,7 @@
             android:paddingStart="20dp" />
 
         <EditText
+            style="@style/TextStyle1"
             android:id="@+id/myPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,6 +44,7 @@
 
         <EditText
             android:id="@+id/myDestination"
+            style="@style/TextStyle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -56,8 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="order"
-            android:onClick="orderRide"/>
+            android:onClick="orderRide"
+            android:text="order" />
     </RelativeLayout>
 
 
