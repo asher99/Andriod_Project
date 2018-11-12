@@ -3,24 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:columnWidth="90dp"
+        android:horizontalSpacing="10dp"
+        android:numRows="3"
+        android:padding="5dp"
+        android:verticalSpacing="10dp"
         tools:context="com.example.testapp.testapp.MainActivity">
 
-        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/mygridview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnWidth="90dp"
-            android:horizontalSpacing="10dp"
-            android:numColumns="auto_fit"
-            android:padding="5dp"
-            android:verticalSpacing="10dp" />
-    </RelativeLayout>
 
+        <EditText
+            android:id="@+id/myEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/myPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="phone"
+            android:layout_below="@id/myEmail"/>
+
+        <TextView
+            android:id="@+id/myDestination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_below="@id/myPhoneNumber"/>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
