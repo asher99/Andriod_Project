@@ -2,6 +2,8 @@ package com.example.myapplication.controller.controller.controller;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
 import com.example.myapplication.R;
 import com.google.firebase.database.DatabaseReference;
@@ -18,5 +20,15 @@ public class MainActivity extends Activity {
         DatabaseReference myRef = database.getReference("message");
 
         myRef.setValue("Hello, World!");
+    }
+
+    public void orderRide(View v) {
+        //get destination field
+        EditText dest = (EditText)findViewById(R.id.myDestination);
+        String destinationField = dest.getText().toString();
+        //get email field
+        EditText phoneNumberField = (EditText)findViewById(R.id.myPhoneNumber);
+        //get phone number field
+        EditText emailField = (EditText)findViewById(R.id.myEmail);
     }
 }
