@@ -20,27 +20,13 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="25dp">
 
-
-        <EditText
-            style="@style/TextStyle1"
-            android:id="@+id/myEmail"
+        <TextView
+            android:id="@+id/DestinationText"
+            style="@style/TextViemStyle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/myPhoneNumber"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-             />
-
-        <EditText
-            style="@style/TextStyle1"
-            android:id="@+id/myPhoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/myDestination"
-            android:ems="10"
-            android:hint="Phone number"
-            android:inputType="phone" />
+            android:layout_above="@id/myDestination"
+            android:text="Destination" />
 
         <EditText
             android:id="@+id/myDestination"
@@ -50,8 +36,42 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:ems="10"
-            android:hint="Destination"
             android:inputType="text" />
+
+        <TextView
+            android:id="@+id/PhoneText"
+            style="@style/TextViemStyle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/myPhoneNumber"
+            android:text="Phone number"
+            />
+        <EditText
+            style="@style/TextStyle1"
+            android:id="@+id/myPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myDestination"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <TextView
+            android:id="@+id/EmailText"
+            style="@style/TextViemStyle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/myEmail"
+            android:layout_below="@id/myPhoneNumber"
+            android:text="Email"
+            />
+        <EditText
+            style="@style/TextStyle1"
+            android:id="@+id/myEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myPhoneNumber"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
 
         <Button
             android:id="@+id/button2"

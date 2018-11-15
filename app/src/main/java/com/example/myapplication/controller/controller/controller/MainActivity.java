@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/*
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageRef.child("temp").child("myFile.abc").putFile(uri);
         setContentView(R.layout.activity_main);
-
+*/
         //get destination field
         dest = (EditText) findViewById(R.id.myDestination);
         String destinationField = dest.getText().toString();
