@@ -27,13 +27,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/*
+
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
         myRef.setValue("Hello, World!");
-
+/*
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -50,8 +50,9 @@ public class MainActivity extends Activity {
         StorageReference mStorageRef;
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageRef.child("temp").child("myFile.abc").putFile(uri);
-        setContentView(R.layout.activity_main);
 */
+        setContentView(R.layout.activity_main);
+
         //get destination field
         dest = (EditText) findViewById(R.id.myDestination);
         String destinationField = dest.getText().toString();
