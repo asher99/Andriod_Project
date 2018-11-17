@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "146691394096",
-    "firebase_url": "https://androidproject-c32b3.firebaseio.com",
-    "project_id": "androidproject-c32b3",
-    "storage_bucket": "androidproject-c32b3.appspot.com"
+    "project_number": "551764178375",
+    "firebase_url": "https://andriodproject-cc6f3.firebaseio.com",
+    "project_id": "andriodproject-cc6f3",
+    "storage_bucket": "andriodproject-cc6f3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:146691394096:android:13c3c6a65bcbec53",
+        "mobilesdk_app_id": "1:551764178375:android:13c3c6a65bcbec53",
         "android_client_info": {
           "package_name": "com.example.myapplication"
         }
       },
       "oauth_client": [
         {
-          "client_id": "146691394096-pfh20v3vgpjmctilq4phdbr85i8cvbig.apps.googleusercontent.com",
+          "client_id": "551764178375-t5i3d682s2abasf5l965jh6vag700e06.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.myapplication",
-            "certificate_hash": "7953f6d2d1b44e4dc006165194becc4f4c1fded4"
+            "certificate_hash": "9939156d4f99853cc60e6772d557220332d727e1"
           }
         },
         {
-          "client_id": "146691394096-2j7r16s90lkqr4otoj1usvlv9aeunugb.apps.googleusercontent.com",
+          "client_id": "551764178375-k1t80vmjdh1flt3968pvispnrrr0vu1r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDMK_41OuqL-smUiDRXaVQZmvu6pQQukSs"
+          "current_key": "AIzaSyDi1rx_3Enh1txfIABckEoxU7rf3IGA9TQ"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "146691394096-2j7r16s90lkqr4otoj1usvlv9aeunugb.apps.googleusercontent.com",
+              "client_id": "551764178375-k1t80vmjdh1flt3968pvispnrrr0vu1r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
