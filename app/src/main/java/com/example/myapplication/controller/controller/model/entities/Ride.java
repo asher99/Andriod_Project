@@ -3,7 +3,7 @@ package com.example.myapplication.controller.controller.model.entities;
 public class Ride {
 
     private String destination;
-    private String phone;
+    private Long phone;
     private String email;
 
     public String getDestination() {
@@ -14,11 +14,11 @@ public class Ride {
         this.destination = destination;
     }
 
-    public String getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
