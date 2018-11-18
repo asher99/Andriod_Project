@@ -1,20 +1,25 @@
 package com.example.myapplication.controller.controller.controller;
 
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.controller.controller.model.datasource.Firebase_DBManager;
+import com.example.myapplication.controller.controller.model.entities.Ride;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends Activity {
 
     private EditText dest;
+    private Location location;
     private EditText phoneNumberField;
     private EditText emailField;
     private Button orderButton;
@@ -22,30 +27,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-/*
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                statusText.setText(value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                statusText.setText("Failed to read value.");
-            }
-        });
-
-        StorageReference mStorageRef;
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        mStorageRef.child("temp").child("myFile.abc").putFile(uri);
-*/
         setContentView(R.layout.activity_main);
 
         //get destination field
@@ -65,7 +46,6 @@ public class MainActivity extends Activity {
         phoneNumberField.addTextChangedListener(loginTextWatcher);
         emailField.addTextChangedListener(loginTextWatcher);
 
-
     }
 
     /**
@@ -74,9 +54,36 @@ public class MainActivity extends Activity {
      *
      * @param v
      */
-    public void orderRide(View v) {
+    public void orderRide(View v) throws Exception {
 
+        try {
+            String destination = dest.getText().toString();
+            Long phone = Long.valueOf(phoneNumberField.getText().toString());
+            String email = emailField.getText().toString();
+            String location = getLocation();
+            Ride myRide = new Ride(destination, location, phone, email);
 
+            Firebase_DBManager.addRide(myRide, new Firebase_DBManager.Action<Long>() {
+                @Override
+                public void onSuccess(Long obj) {
+                    Toast.makeText(getBaseContext(), "successfully sent a pickup request " + obj, Toast.LENGTH_LONG).show();
+                    //  resetView();
+                }
+
+                @Override
+                public void onFailure(Exception exception) {
+                    Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
+                    //  resetView();
+                }
+
+                @Override
+                public void onProgress(String status, double percent) {
+
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), "Error ", Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
