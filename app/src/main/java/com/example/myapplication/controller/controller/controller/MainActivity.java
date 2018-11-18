@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
             String destination = dest.getText().toString();
             Long phone = Long.valueOf(phoneNumberField.getText().toString());
             String email = emailField.getText().toString();
-            String location = getLocation();
+            String location = "s";//getLocation();
             Ride myRide = new Ride(destination, location, phone, email);
 
             Firebase_DBManager.addRide(myRide, new Firebase_DBManager.Action<Long>() {
