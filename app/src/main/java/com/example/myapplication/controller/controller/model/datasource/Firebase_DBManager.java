@@ -3,6 +3,7 @@ package com.example.myapplication.controller.controller.model.datasource;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.example.myapplication.controller.controller.model.backend.Backend;
 import com.example.myapplication.controller.controller.model.entities.Ride;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,7 +21,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Firebase_DBManager {
+public class Firebase_DBManager implements Backend {
 
     public interface Action<T> {
         void onSuccess(T obj);
@@ -47,10 +48,10 @@ public class Firebase_DBManager {
     }
 
 
-    public static void addRide(final Ride Ride, final Action<Long> action) {
+    public void addRide(final Ride Ride, final Action<Long> action) {
 
         String key = Ride.getPhone().toString();
-        RidesRef.child(key).setValue(Ride).addOnSuccessListener(new OnSuccessListener<Void>() {
+        RidesRef.push().setValue(Ride).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 action.onSuccess(Ride.getPhone());
@@ -98,7 +99,7 @@ public class Firebase_DBManager {
         });
     }
 
-    public static void updateRide(final Ride toUpdate, final Action<Long> action) {
+    public void updateRide(final Ride toUpdate, final Action<Long> action) {
         //final String key = ((Long) toUpdate.getPhone()).toString();
 
         removeRide(toUpdate.getPhone(), new Action<Long>() {

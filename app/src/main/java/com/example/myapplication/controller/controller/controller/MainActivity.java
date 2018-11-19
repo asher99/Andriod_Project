@@ -3,6 +3,7 @@ package com.example.myapplication.controller.controller.controller;
 import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.controller.controller.model.backend.Backend;
+import com.example.myapplication.controller.controller.model.backend.BackendFactory;
 import com.example.myapplication.controller.controller.model.datasource.Firebase_DBManager;
 import com.example.myapplication.controller.controller.model.entities.Ride;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +26,7 @@ public class MainActivity extends Activity {
     private EditText phoneNumberField;
     private EditText emailField;
     private Button orderButton;
+    private Backend backend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,8 @@ public class MainActivity extends Activity {
         //get destination field
         dest = (EditText) findViewById(R.id.myDestination);
         String destinationField = dest.getText().toString();
+
+        backend = BackendFactory.getInstance();
 
         //get email field
         phoneNumberField = (EditText) findViewById(R.id.myPhoneNumber);
@@ -61,20 +67,20 @@ public class MainActivity extends Activity {
             Long phone = Long.valueOf(phoneNumberField.getText().toString());
             String email = emailField.getText().toString();
             String location = "s";//getLocation();
-            
+
             Ride myRide = new Ride(destination, location, phone, email);
 
-            Firebase_DBManager.addRide(myRide, new Firebase_DBManager.Action<Long>() {
+            backend.addRide(myRide, new Firebase_DBManager.Action<Long>() {
                 @Override
                 public void onSuccess(Long obj) {
                     Toast.makeText(getBaseContext(), "successfully sent a pickup request " + obj, Toast.LENGTH_LONG).show();
-                    //  resetView();
+                    resetView();
                 }
 
                 @Override
                 public void onFailure(Exception exception) {
                     Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
-                    //  resetView();
+                    //resetView();
                 }
 
                 @Override
@@ -110,4 +116,10 @@ public class MainActivity extends Activity {
         public void afterTextChanged(Editable s) {
         }
     };
+
+    private void resetView() {
+        dest.setText("");
+        phoneNumberField.setText("");
+        emailField.setText("");
+    }
 }
