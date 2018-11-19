@@ -61,6 +61,7 @@ public class MainActivity extends Activity {
             Long phone = Long.valueOf(phoneNumberField.getText().toString());
             String email = emailField.getText().toString();
             String location = "s";//getLocation();
+            
             Ride myRide = new Ride(destination, location, phone, email);
 
             Firebase_DBManager.addRide(myRide, new Firebase_DBManager.Action<Long>() {
@@ -96,11 +97,12 @@ public class MainActivity extends Activity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             String userDestInput = dest.getText().toString().trim();
             String userPhoneInput = phoneNumberField.getText().toString().trim();
-            String userEmailInput = emailField.getText().toString().trim();
 
-            orderButton.setEnabled(!userDestInput.isEmpty() && (!userPhoneInput.isEmpty() || !userEmailInput.isEmpty()));
+            // the information field of destination and phone number must be correct inorder to send a request
+            orderButton.setEnabled(!userDestInput.isEmpty() && !userPhoneInput.isEmpty());
 
         }
 
