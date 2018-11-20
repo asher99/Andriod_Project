@@ -1,9 +1,17 @@
 package com.example.myapplication.controller.controller.controller;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,28 +24,71 @@ import com.example.myapplication.controller.controller.model.backend.Backend;
 import com.example.myapplication.controller.controller.model.backend.BackendFactory;
 import com.example.myapplication.controller.controller.model.datasource.Firebase_DBManager;
 import com.example.myapplication.controller.controller.model.entities.Ride;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends Activity {
 
     private EditText dest;
-    private Location location;
+    private String location;
     private EditText phoneNumberField;
     private EditText emailField;
     private Button orderButton;
     private Backend backend;
 
+    // Acquire a reference to the system Location Manager
+    LocationManager locationManager;
+
+
+    // Define a listener that responds to location updates
+    LocationListener locationListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //get destination field
-        dest = (EditText) findViewById(R.id.myDestination);
-        String destinationField = dest.getText().toString();
+        findViews();
 
         backend = BackendFactory.getInstance();
+
+        String destinationField = dest.getText().toString();
+
+
+        // watches for changes in order to enable the button
+        dest.addTextChangedListener(loginTextWatcher);
+        phoneNumberField.addTextChangedListener(loginTextWatcher);
+        emailField.addTextChangedListener(loginTextWatcher);
+
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location locat) {
+
+                //showSunTimes(location.getLatitude(), location.getLongitude()); /// ...
+
+                location = getPlace(locat);
+                // Called when a new location is found by the network location provider.
+                //    Toast.makeText(getBaseContext(), location.toString(), Toast.LENGTH_LONG).show();
+                // Remove the listener you previously added
+                //  locationManager.removeUpdates(locationListener);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+    }
+
+    private void findViews() {
+        //get destination field
+        dest = (EditText) findViewById(R.id.myDestination);
 
         //get email field
         phoneNumberField = (EditText) findViewById(R.id.myPhoneNumber);
@@ -46,12 +97,6 @@ public class MainActivity extends Activity {
         emailField = (EditText) findViewById(R.id.myEmail);
 
         orderButton = (Button) findViewById(R.id.button2);
-
-        // watches for changes in order to enable the button
-        dest.addTextChangedListener(loginTextWatcher);
-        phoneNumberField.addTextChangedListener(loginTextWatcher);
-        emailField.addTextChangedListener(loginTextWatcher);
-
     }
 
     /**
@@ -66,7 +111,7 @@ public class MainActivity extends Activity {
             String destination = dest.getText().toString();
             Long phone = Long.valueOf(phoneNumberField.getText().toString());
             String email = emailField.getText().toString();
-            String location = "s";//getLocation();
+            //getGpsLocation();
 
             Ride myRide = new Ride(destination, location, phone, email);
 
@@ -116,6 +161,59 @@ public class MainActivity extends Activity {
         public void afterTextChanged(Editable s) {
         }
     };
+
+    private void getGpsLocation() {
+
+        //     Check the SDK version and whether the permission is already granted or not.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 5);
+
+        } else {
+            // Android version is lesser than 6.0 or the permission is already granted.
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
+
+    }
+
+    public String getPlace(Location location) {
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+
+
+            if (addresses.size() > 0) {
+                String cityName = addresses.get(0).getAddressLine(0);
+                String stateName = addresses.get(0).getAddressLine(1);
+                String countryName = addresses.get(0).getAddressLine(2);
+                return stateName + "\n" + cityName + "\n" + countryName;
+            }
+
+            return "no place: \n (" + location.getLongitude() + " , " + location.getLatitude() + ")";
+        } catch (
+                IOException e)
+
+        {
+            e.printStackTrace();
+        }
+        return "IOException ...";
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 5) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+            } else {
+                Toast.makeText(this, "Until you grant the permission, we canot display the location", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
 
     private void resetView() {
         dest.setText("");
