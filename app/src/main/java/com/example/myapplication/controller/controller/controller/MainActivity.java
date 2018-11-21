@@ -6,12 +6,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -24,6 +26,7 @@ import com.example.myapplication.controller.controller.model.backend.Backend;
 import com.example.myapplication.controller.controller.model.backend.BackendFactory;
 import com.example.myapplication.controller.controller.model.datasource.Firebase_DBManager;
 import com.example.myapplication.controller.controller.model.entities.Ride;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -31,11 +34,12 @@ import java.util.Locale;
 public class MainActivity extends Activity {
 
     private EditText dest;
-    private String location;
+    private String location = null;
     private EditText phoneNumberField;
     private EditText emailField;
     private Button orderButton;
     private Backend backend;
+
 
     // Acquire a reference to the system Location Manager
     LocationManager locationManager;
@@ -52,9 +56,6 @@ public class MainActivity extends Activity {
 
         backend = BackendFactory.getInstance();
 
-        String destinationField = dest.getText().toString();
-
-
         // watches for changes in order to enable the button
         dest.addTextChangedListener(loginTextWatcher);
         phoneNumberField.addTextChangedListener(loginTextWatcher);
@@ -65,14 +66,7 @@ public class MainActivity extends Activity {
         // Define a listener that responds to location updates
         locationListener = new LocationListener() {
             public void onLocationChanged(Location locat) {
-
-                //showSunTimes(location.getLatitude(), location.getLongitude()); /// ...
-
                 location = getPlace(locat);
-                // Called when a new location is found by the network location provider.
-                //    Toast.makeText(getBaseContext(), location.toString(), Toast.LENGTH_LONG).show();
-                // Remove the listener you previously added
-                //  locationManager.removeUpdates(locationListener);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -111,14 +105,16 @@ public class MainActivity extends Activity {
             String destination = dest.getText().toString();
             Long phone = Long.valueOf(phoneNumberField.getText().toString());
             String email = emailField.getText().toString();
-            //getGpsLocation();
+
+            if (location == null)
+                location = getPlace(getGpsLocation());
 
             Ride myRide = new Ride(destination, location, phone, email);
 
             backend.addRide(myRide, new Firebase_DBManager.Action<Long>() {
                 @Override
                 public void onSuccess(Long obj) {
-                    Toast.makeText(getBaseContext(), "successfully sent a pickup request " + obj, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "successfully sent a pickup request to" + location, Toast.LENGTH_LONG).show();
                     resetView();
                 }
 
@@ -162,7 +158,7 @@ public class MainActivity extends Activity {
         }
     };
 
-    private void getGpsLocation() {
+    private Location getGpsLocation() {
 
         //     Check the SDK version and whether the permission is already granted or not.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -172,7 +168,7 @@ public class MainActivity extends Activity {
             // Android version is lesser than 6.0 or the permission is already granted.
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         }
-
+        return locationManager.getLastKnownLocation(locationManager.PASSIVE_PROVIDER);
     }
 
     public String getPlace(Location location) {
@@ -191,10 +187,7 @@ public class MainActivity extends Activity {
             }
 
             return "no place: \n (" + location.getLongitude() + " , " + location.getLatitude() + ")";
-        } catch (
-                IOException e)
-
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "IOException ...";
@@ -212,7 +205,6 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, "Until you grant the permission, we canot display the location", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
     private void resetView() {
