@@ -21,6 +21,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
 import com.example.myapplication.R;
 import com.example.myapplication.controller.controller.model.backend.Backend;
 import com.example.myapplication.controller.controller.model.backend.BackendFactory;
@@ -33,6 +38,8 @@ import java.util.Locale;
 
 public class MainActivity extends Activity {
 
+    private PlaceAutocompleteFragment placeAutocompleteFragment1;
+
     private EditText dest;
     private String location = null;
     private EditText phoneNumberField;
@@ -40,6 +47,7 @@ public class MainActivity extends Activity {
     private Button orderButton;
     private Backend backend;
 
+    Location locationA = new Location("A");
 
     // Acquire a reference to the system Location Manager
     LocationManager locationManager;
@@ -78,6 +86,20 @@ public class MainActivity extends Activity {
             public void onProviderDisabled(String provider) {
             }
         };
+
+        placeAutocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                locationA.setLatitude(place.getLatLng().latitude);
+                locationA.setLongitude(place.getLatLng().longitude);
+
+            }
+
+            @Override
+            public void onError(Status status) {
+
+            }
+        });
     }
 
     private void findViews() {
@@ -91,6 +113,8 @@ public class MainActivity extends Activity {
         emailField = (EditText) findViewById(R.id.myEmail);
 
         orderButton = (Button) findViewById(R.id.button2);
+
+        placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
     }
 
     /**

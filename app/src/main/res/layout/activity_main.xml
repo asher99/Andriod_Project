@@ -31,13 +31,13 @@
 
         <EditText
             android:id="@+id/myDestination"
-            android:drawableLeft="@drawable/ic_add_location_blue_gray_24dp"
             style="@style/TextStyle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint=" King David st. 183"
             android:layout_below="@id/DestinationText"
+            android:drawableLeft="@drawable/ic_add_location_blue_gray_24dp"
             android:ems="10"
+            android:hint=" King David st. 183"
             android:inputType="text" />
 
         <TextView
@@ -50,12 +50,12 @@
             android:text="Phone number" />
 
         <EditText
-            android:drawableLeft="@drawable/ic_local_phone_black_24dp"
             android:id="@+id/myPhoneNumber"
             style="@style/TextStyle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/PhoneText"
+            android:drawableLeft="@drawable/ic_local_phone_black_24dp"
             android:ems="10"
             android:hint=" 05 * * * * * * * *"
             android:inputType="phone" />
@@ -70,11 +70,11 @@
 
         <EditText
             android:id="@+id/myEmail"
-            android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
             style="@style/TextStyle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/EmailText"
+            android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
             android:ems="10"
             android:hint=" myexample@example.com"
             android:inputType="textEmailAddress" />
