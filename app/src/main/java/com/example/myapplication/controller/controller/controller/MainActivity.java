@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
 
         orderButton = (Button) findViewById(R.id.button2);
 
-        placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
+        //placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
     }
 
     /**
