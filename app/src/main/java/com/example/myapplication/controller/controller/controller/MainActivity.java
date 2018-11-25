@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -46,8 +47,6 @@ public class MainActivity extends Activity {
     private EditText emailField;
     private Button orderButton;
     private Backend backend;
-
-    Location locationA = new Location("A");
 
     // Acquire a reference to the system Location Manager
     LocationManager locationManager;
@@ -90,9 +89,8 @@ public class MainActivity extends Activity {
         placeAutocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                locationA.setLatitude(place.getLatLng().latitude);
-                locationA.setLongitude(place.getLatLng().longitude);
-
+            location = place.getName().toString();
+            dest.setText(location);
             }
 
             @Override
@@ -114,7 +112,7 @@ public class MainActivity extends Activity {
 
         orderButton = (Button) findViewById(R.id.button2);
 
-        //placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
+       // placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);;
     }
 
     /**

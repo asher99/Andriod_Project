@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="48" />
+                                                <entry key="scalingPercent" value="63" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,9 +34,11 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="74a6a1" />
-                                      <entry key="foregroundImage" value="C:\Android\AndroidStudioProjects\Andriod_Project\thumbsup.png" />
-                                      <entry key="outputName" value="pickapp" />
+                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="backgroundLayerName" value="pickup_background" />
+                                      <entry key="foregroundImage" value="C:\Android\AndroidStudioProjects\Andriod_Project\logoforbutton.png" />
+                                      <entry key="foregroundLayerName" value="pickup_foreground" />
+                                      <entry key="outputName" value="pickup_Button" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -19,6 +19,23 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="25dp">
+<!--
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <fragment
+                android:id="@+id/place_autocomplete_fragment1"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button2"
+                android:layout_weight="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.v7.widget.CardView>
+-->
 
         <TextView
             android:id="@+id/DestinationText"
@@ -46,8 +63,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/myDestination"
-
             android:text="Phone number" />
+
 
         <EditText
             android:id="@+id/myPhoneNumber"
@@ -92,6 +109,8 @@
             android:textColor="#FFFFFF"
             android:textSize="25sp"
             android:textStyle="bold" />
+
+
     </RelativeLayout>
 
 
