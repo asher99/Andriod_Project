@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
             }
         };
 
-        placeAutocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+       /* placeAutocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
             location = place.getName().toString();
@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
             public void onError(Status status) {
 
             }
-        });
+        });*/
     }
 
     private void findViews() {
