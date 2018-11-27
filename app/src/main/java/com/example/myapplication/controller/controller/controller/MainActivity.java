@@ -3,7 +3,12 @@ package com.example.myapplication.controller.controller.controller;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 
@@ -52,6 +57,7 @@ public class MainActivity extends Activity {
     LocationManager locationManager;
 
 
+
     // Define a listener that responds to location updates
     LocationListener locationListener;
 
@@ -85,19 +91,32 @@ public class MainActivity extends Activity {
             public void onProviderDisabled(String provider) {
             }
         };
-
-       /* placeAutocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+        placeAutocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-            location = place.getName().toString();
-            dest.setText(location);
+                Location target = new Location("target");
+                target.setLatitude(place.getLatLng().latitude);
+                target.setLongitude(place.getLatLng().longitude);
+                location = getPlace(target);
             }
 
             @Override
             public void onError(Status status) {
 
             }
-        });*/
+        });
+
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                FragmentManager fm = getFragmentManager();
+                Fragment fragment = (fm.findFragmentById(R.id.place_autocomplete_fragment1));
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.remove(fragment);
+                ft.commit();
+            }
+        });
     }
 
     private void findViews() {
@@ -112,7 +131,7 @@ public class MainActivity extends Activity {
 
         orderButton = (Button) findViewById(R.id.button2);
 
-       // placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);;
+        placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);;
     }
 
     /**
@@ -124,6 +143,7 @@ public class MainActivity extends Activity {
     public void orderRide(View v) throws Exception {
 
         try {
+
             String destination = dest.getText().toString();
             Long phone = Long.valueOf(phoneNumberField.getText().toString());
             String email = emailField.getText().toString();
