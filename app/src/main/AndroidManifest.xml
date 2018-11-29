@@ -5,10 +5,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyC8AwyRywpHGrMl3mDUz-d3E1-LOAoIAyA" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,12 +12,18 @@
         android:roundIcon="@mipmap/pickapp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC8AwyRywpHGrMl3mDUz-d3E1-LOAoIAyA" />
+
         <activity android:name=".controller.controller.controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
     </application>
 
 </manifest>
