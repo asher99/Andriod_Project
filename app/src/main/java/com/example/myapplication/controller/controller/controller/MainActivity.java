@@ -1,7 +1,10 @@
 package com.example.myapplication.controller.controller.controller;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -21,6 +24,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -97,7 +101,7 @@ public class MainActivity extends Activity {
                 Location target = new Location("target");
                 target.setLatitude(place.getLatLng().latitude);
                 target.setLongitude(place.getLatLng().longitude);
-                location = getPlace(target);
+                dest.setText(getPlace(target));
             }
 
             @Override
@@ -132,6 +136,7 @@ public class MainActivity extends Activity {
         orderButton = (Button) findViewById(R.id.button2);
 
         placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);;
+
     }
 
     /**
@@ -143,7 +148,7 @@ public class MainActivity extends Activity {
     public void orderRide(View v) throws Exception {
 
         try {
-
+            checkFieldsInput();
             String destination = dest.getText().toString();
             Long phone = Long.valueOf(phoneNumberField.getText().toString());
             String email = emailField.getText().toString();
@@ -223,9 +228,8 @@ public class MainActivity extends Activity {
 
             if (addresses.size() > 0) {
                 String cityName = addresses.get(0).getAddressLine(0);
-                String stateName = addresses.get(0).getAddressLine(1);
-                String countryName = addresses.get(0).getAddressLine(2);
-                return stateName + "\n" + cityName + "\n" + countryName;
+
+                return cityName;
             }
 
             return "no place: \n (" + location.getLongitude() + " , " + location.getLatitude() + ")";
@@ -248,6 +252,56 @@ public class MainActivity extends Activity {
             }
         }
     }
+
+    private void checkFieldsInput(){
+
+        // Reset errors.
+        phoneNumberField.setError(null);
+        emailField.setError(null);
+        // Store values at the time of the login attempt.
+        String phone = phoneNumberField.getText().toString();
+        String email = emailField.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (!TextUtils.isEmpty(phone) && !isPhoneValid(phone)) {
+            phoneNumberField.setError("please enter a valid phone number");
+            focusView = phoneNumberField;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            emailField.setError("please enter an email address");
+            focusView = emailField;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            emailField.setError("the email address is not valid");
+            focusView = emailField;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        }
+
+    }
+
+    private boolean isEmailValid(String email) {
+
+        //TODO: Replace this with your own logic
+        return email.contains("@");
+    }
+
+    private boolean isPhoneValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() > 4;
+    }
+
 
     private void resetView() {
         dest.setText("");

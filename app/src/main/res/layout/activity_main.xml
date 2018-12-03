@@ -5,7 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/myCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp">
 
+        <fragment
+            android:id="@+id/place_autocomplete_fragment1"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+    </android.support.v7.widget.CardView>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -22,15 +34,6 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="25dp">
 
-        <fragment
-            android:id="@+id/place_autocomplete_fragment1"
-
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_below="@id/button2"/>
-
         <TextView
             android:id="@+id/DestinationText"
             style="@style/TextViemStyle1"
@@ -38,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:paddingTop="30dp"
             android:text="Destination" />
 
         <EditText
@@ -58,7 +62,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/myDestination"
             android:text="Phone number" />
-
 
         <EditText
             android:id="@+id/myPhoneNumber"
@@ -103,9 +106,6 @@
             android:textColor="#FFFFFF"
             android:textSize="25sp"
             android:textStyle="bold" />
-
-
     </RelativeLayout>
-
 
 </android.support.constraint.ConstraintLayout>
