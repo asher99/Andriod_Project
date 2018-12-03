@@ -61,7 +61,6 @@ public class MainActivity extends Activity {
     LocationManager locationManager;
 
 
-
     // Define a listener that responds to location updates
     LocationListener locationListener;
 
@@ -134,10 +133,16 @@ public class MainActivity extends Activity {
         emailField = (EditText) findViewById(R.id.myEmail);
 
         orderButton = (Button) findViewById(R.id.button2);
-
-        placeAutocompleteFragment1 = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);;
-
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkFieldsInput(v);
+            }
+        });
+        placeAutocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
+        ;
     }
+
 
     /**
      * executed at click of the order button
@@ -148,7 +153,7 @@ public class MainActivity extends Activity {
     public void orderRide(View v) throws Exception {
 
         try {
-            checkFieldsInput();
+
             String destination = dest.getText().toString();
             Long phone = Long.valueOf(phoneNumberField.getText().toString());
             String email = emailField.getText().toString();
@@ -253,7 +258,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void checkFieldsInput(){
+    private void checkFieldsInput(View v) {
 
         // Reset errors.
         phoneNumberField.setError(null);
@@ -278,7 +283,7 @@ public class MainActivity extends Activity {
             focusView = emailField;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            emailField.setError("the email address is not valid");
+            emailField.setError("email address is not valid");
             focusView = emailField;
             cancel = true;
         }
@@ -287,19 +292,21 @@ public class MainActivity extends Activity {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
+        } else {
+            try {
+                orderRide(v);
+            } catch (Exception e) {
+            }
         }
-
     }
 
     private boolean isEmailValid(String email) {
-
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(EMAIL_REGEX);
     }
 
-    private boolean isPhoneValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+    private boolean isPhoneValid(String phone) {
+        return (phone.length() == 10 && phone.startsWith("05"));
     }
 
 
