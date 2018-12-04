@@ -11,6 +11,7 @@ public class Ride {
     private String location;
     private Long phone;
     private String email;
+    private ClientRequestStatus status;
 
     /**
      * constructor
@@ -25,6 +26,7 @@ public class Ride {
         this.location = loca;
         this.phone = phone;
         this.email = email;
+        status = ClientRequestStatus.WAITING;
     }
 
     // *********** getters & setters ************
@@ -99,5 +101,13 @@ public class Ride {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ClientRequestStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ClientRequestStatus status) {
+        this.status = status;
     }
 }

@@ -142,8 +142,7 @@ public class MainActivity extends Activity {
         placeAutocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
         ;
     }
-
-
+    
     /**
      * executed at click of the order button
      * enters the order to the database
@@ -151,7 +150,6 @@ public class MainActivity extends Activity {
      * @param v
      */
     public void orderRide(View v) throws Exception {
-
         try {
 
             String destination = dest.getText().toString();
@@ -210,12 +208,11 @@ public class MainActivity extends Activity {
         }
     };
 
-    private Location getGpsLocation() {
 
+    private Location getGpsLocation() {
         //     Check the SDK version and whether the permission is already granted or not.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 5);
-
         } else {
             // Android version is lesser than 6.0 or the permission is already granted.
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
@@ -223,6 +220,11 @@ public class MainActivity extends Activity {
         return locationManager.getLastKnownLocation(locationManager.PASSIVE_PROVIDER);
     }
 
+    /**
+     * gets a gps location object and returns a string of name of place.
+     * @param location
+     * @return
+     */
     public String getPlace(Location location) {
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -259,18 +261,17 @@ public class MainActivity extends Activity {
     }
 
     private void checkFieldsInput(View v) {
-
         // Reset errors.
         phoneNumberField.setError(null);
         emailField.setError(null);
-        // Store values at the time of the login attempt.
+        // Store values at the time of the pickup attempt.
         String phone = phoneNumberField.getText().toString();
         String email = emailField.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
+        // Check for a valid phone number.
         if (!TextUtils.isEmpty(phone) && !isPhoneValid(phone)) {
             phoneNumberField.setError("please enter a valid phone number");
             focusView = phoneNumberField;
@@ -289,7 +290,7 @@ public class MainActivity extends Activity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
+            // There was an error; don't attempt pickup and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
@@ -308,7 +309,6 @@ public class MainActivity extends Activity {
     private boolean isPhoneValid(String phone) {
         return (phone.length() == 10 && phone.startsWith("05"));
     }
-
 
     private void resetView() {
         dest.setText("");
