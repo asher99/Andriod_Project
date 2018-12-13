@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
         placeAutocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
         ;
     }
-    
+
     /**
      * executed at click of the order button
      * enters the order to the database
