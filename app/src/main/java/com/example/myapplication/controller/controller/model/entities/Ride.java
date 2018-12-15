@@ -7,9 +7,10 @@ package com.example.myapplication.controller.controller.model.entities;
 public class Ride {
 
     // ************ fields **************
+    private String name;
     private String destination;
     private String location;
-    private Long phone;
+    private String phone;
     private String email;
     private ClientRequestStatus status;
 
@@ -21,7 +22,8 @@ public class Ride {
      * @param phone
      * @param email
      */
-    public Ride(String destination, String loca, Long phone, String email) {
+    public Ride(String name, String destination, String loca, String phone, String email) {
+        this.name = name;
         this.destination = destination;
         this.location = loca;
         this.phone = phone;
@@ -30,6 +32,14 @@ public class Ride {
     }
 
     // *********** getters & setters ************
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
      * gets destination
@@ -72,7 +82,7 @@ public class Ride {
      *
      * @return Long
      */
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -81,7 +91,7 @@ public class Ride {
      *
      * @param phone
      */
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

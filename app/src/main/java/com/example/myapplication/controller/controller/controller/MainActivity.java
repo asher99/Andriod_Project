@@ -19,6 +19,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -50,6 +51,7 @@ public class MainActivity extends Activity {
 
     private PlaceAutocompleteFragment placeAutocompleteFragment1;
 
+    private EditText userName;
     private EditText dest;
     private String location = null;
     private EditText phoneNumberField;
@@ -73,6 +75,7 @@ public class MainActivity extends Activity {
         backend = BackendFactory.getInstance();
 
         // watches for changes in order to enable the button
+        userName.addTextChangedListener(loginTextWatcher);
         dest.addTextChangedListener(loginTextWatcher);
         phoneNumberField.addTextChangedListener(loginTextWatcher);
         emailField.addTextChangedListener(loginTextWatcher);
@@ -123,6 +126,9 @@ public class MainActivity extends Activity {
     }
 
     private void findViews() {
+        //get name field
+        userName = (EditText) findViewById(R.id.myName);
+
         //get destination field
         dest = (EditText) findViewById(R.id.myDestination);
 
@@ -151,27 +157,29 @@ public class MainActivity extends Activity {
      */
     public void orderRide(View v) throws Exception {
         try {
-
+            String name = userName.getText().toString();
             String destination = dest.getText().toString();
-            Long phone = Long.valueOf(phoneNumberField.getText().toString());
+            String phone = phoneNumberField.getText().toString();
             String email = emailField.getText().toString();
 
             if (location == null)
                 location = getPlace(getGpsLocation());
 
-            Ride myRide = new Ride(destination, location, phone, email);
+            if(location.equals("IOException ...") ) {
+                throw new Exception("your location is not recognized");
+            }
+            Ride myRide = new Ride(name, destination, location, phone, email);
 
-            backend.addRide(myRide, new Firebase_DBManager.Action<Long>() {
+
+            backend.addRide(myRide, new Backend.Action() {
                 @Override
-                public void onSuccess(Long obj) {
+                public void onSuccess() {
                     Toast.makeText(getBaseContext(), "successfully sent a pickup request to" + location, Toast.LENGTH_LONG).show();
                     resetView();
                 }
-
                 @Override
                 public void onFailure(Exception exception) {
                     Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
-                    //resetView();
                 }
 
                 @Override
@@ -195,11 +203,14 @@ public class MainActivity extends Activity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+            String userNameInput = userName.getText().toString().trim();
             String userDestInput = dest.getText().toString().trim();
             String userPhoneInput = phoneNumberField.getText().toString().trim();
+            String userEmailInput = emailField.getText().toString().trim();
 
             // the information field of destination and phone number must be correct inorder to send a request
-            orderButton.setEnabled(!userDestInput.isEmpty() && !userPhoneInput.isEmpty());
+            orderButton.setEnabled(!userDestInput.isEmpty() && !userPhoneInput.isEmpty()
+                    && !userNameInput.isEmpty() && !userEmailInput.isEmpty());
 
         }
 
@@ -222,6 +233,7 @@ public class MainActivity extends Activity {
 
     /**
      * gets a gps location object and returns a string of name of place.
+     *
      * @param location
      * @return
      */
@@ -255,21 +267,31 @@ public class MainActivity extends Activity {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
             } else {
-                Toast.makeText(this, "Until you grant the permission, we canot display the location", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Until you grant the permission, we cannot display the location", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void checkFieldsInput(View v) {
         // Reset errors.
+        userName.setError(null);
         phoneNumberField.setError(null);
         emailField.setError(null);
+
         // Store values at the time of the pickup attempt.
+        String name = userName.getText().toString();
         String phone = phoneNumberField.getText().toString();
         String email = emailField.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
+
+        // check that name field has a value
+        if (TextUtils.isEmpty(name)) {
+            userName.setError("please enter a user name");
+            focusView = userName;
+            cancel = true;
+        }
 
         // Check for a valid phone number.
         if (!TextUtils.isEmpty(phone) && !isPhoneValid(phone)) {
@@ -311,6 +333,7 @@ public class MainActivity extends Activity {
     }
 
     private void resetView() {
+        userName.setText("");
         dest.setText("");
         phoneNumberField.setText("");
         emailField.setText("");

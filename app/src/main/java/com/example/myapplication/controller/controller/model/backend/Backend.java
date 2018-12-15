@@ -8,5 +8,13 @@ import com.example.myapplication.controller.controller.model.datasource.Firebase
 import com.example.myapplication.controller.controller.model.entities.Ride;
 
 public interface Backend {
-    void addRide(final Ride Ride, final Firebase_DBManager.Action<Long> action);
+    void addRide(final Ride Ride, final Action action);
+
+    public interface Action {
+        void onSuccess();
+
+        void onFailure(Exception exception);
+
+        void onProgress(String status, double percent);
+    }
 }
