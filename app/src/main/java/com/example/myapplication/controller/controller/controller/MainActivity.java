@@ -97,13 +97,19 @@ public class MainActivity extends Activity {
             public void onProviderDisabled(String provider) {
             }
         };
+
         placeAutocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 Location target = new Location("target");
                 target.setLatitude(place.getLatLng().latitude);
                 target.setLongitude(place.getLatLng().longitude);
-                dest.setText(getPlace(target));
+                String destination = getPlace(target);
+                if(destination.equals("IOException ...")){
+                    Toast.makeText(getBaseContext(), "the destination is not recognized \n\t please try again" , Toast.LENGTH_LONG).show();
+                }else {
+                    dest.setText(destination);
+                }
             }
 
             @Override
@@ -165,18 +171,14 @@ public class MainActivity extends Activity {
             if (location == null)
                 location = getPlace(getGpsLocation());
 
-            if(location.equals("IOException ...") ) {
-                throw new Exception("your location is not recognized");
-            }
             Ride myRide = new Ride(name, destination, location, phone, email);
-
-
             backend.addRide(myRide, new Backend.Action() {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(getBaseContext(), "successfully sent a pickup request to" + location, Toast.LENGTH_LONG).show();
                     resetView();
                 }
+
                 @Override
                 public void onFailure(Exception exception) {
                     Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
@@ -188,7 +190,7 @@ public class MainActivity extends Activity {
                 }
             });
         } catch (Exception e) {
-            Toast.makeText(getBaseContext(), "Error ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Error \n" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

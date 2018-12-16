@@ -15,7 +15,7 @@ public class Ride {
     private String phone;
     private String email;
     private ClientRequestStatus status;
-    
+
     private Date startTime;
     private Date finishTime;
     private String driverName;
