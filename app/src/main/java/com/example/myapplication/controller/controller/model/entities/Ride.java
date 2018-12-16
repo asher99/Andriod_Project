@@ -1,5 +1,7 @@
 package com.example.myapplication.controller.controller.model.entities;
 
+import java.util.Date;
+
 /**
  * a ride class allows a new user of the app to request a ride via database
  * needs the location of the user
@@ -13,6 +15,10 @@ public class Ride {
     private String phone;
     private String email;
     private ClientRequestStatus status;
+    
+    private Date startTime;
+    private Date finishTime;
+    private String driverName;
 
     /**
      * constructor
@@ -28,7 +34,12 @@ public class Ride {
         this.location = loca;
         this.phone = phone;
         this.email = email;
+
+        // default values will only be used by reading from the data base
         status = ClientRequestStatus.WAITING;
+        startTime = null;
+        finishTime = null;
+        driverName = null;
     }
 
     // *********** getters & setters ************
@@ -119,5 +130,29 @@ public class Ride {
 
     public void setStatus(ClientRequestStatus status) {
         this.status = status;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 }
