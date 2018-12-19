@@ -5,6 +5,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="AppTheme.Launcher">
+    <item name="android:windowBackground">@drawable/street_hand</item>
+
+    </style>
+
     <style name="TextViemStyle1" parent="@android:style/TextAppearance">
 
         <item name="android:paddingBottom">0dp</item>
