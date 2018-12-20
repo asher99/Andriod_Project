@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
 
         setTheme(R.style.AppTheme);
         try {
-            Thread.sleep(3600);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -88,6 +88,10 @@ public class MainActivity extends Activity {
         emailField.addTextChangedListener(loginTextWatcher);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 5);
+        }
 
         // Define a listener that responds to location updates
         locationListener = new LocationListener() {
@@ -178,6 +182,9 @@ public class MainActivity extends Activity {
             if (location == null)
                 location = getPlace(getGpsLocation());
 
+            if (location.equals("IOException ...")) {
+                throw new Exception("cannot find your location please try later");
+            }
             Ride myRide = new Ride(name, destination, location, phone, email);
             backend.addRide(myRide, new Backend.Action() {
                 @Override
