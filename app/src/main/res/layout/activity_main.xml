@@ -50,7 +50,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/NameText"
-            android:drawableLeft="@drawable/ic_add_location_blue_gray_24dp"
             android:ems="10"
             android:hint=" David Salem"
             android:inputType="text" />

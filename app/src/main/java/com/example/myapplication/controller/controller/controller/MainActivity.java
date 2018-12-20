@@ -163,7 +163,7 @@ public class MainActivity extends Activity {
             }
         });
         placeAutocompleteFragment1 = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
-        ;
+        placeAutocompleteFragment1.setHint("Enter destination");
     }
 
     /**
@@ -186,23 +186,31 @@ public class MainActivity extends Activity {
                 throw new Exception("cannot find your location please try later");
             }
             Ride myRide = new Ride(name, destination, location, phone, email);
-            backend.addRide(myRide, new Backend.Action() {
-                @Override
-                public void onSuccess() {
-                    Toast.makeText(getBaseContext(), "successfully sent a pickup request to" + location, Toast.LENGTH_LONG).show();
-                    resetView();
-                }
+            new AsyncTask<Ride, Void, Void>() {
 
                 @Override
-                public void onFailure(Exception exception) {
-                    Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
-                }
+                protected Void doInBackground(Ride... rides) {
+                    backend.addRide(rides[0], new Backend.Action() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(getBaseContext(), "successfully sent a pickup request to" + location, Toast.LENGTH_LONG).show();
+                            resetView();
+                        }
 
-                @Override
-                public void onProgress(String status, double percent) {
+                        @Override
+                        public void onFailure(Exception exception) {
+                            Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
+                        }
 
+                        @Override
+                        public void onProgress(String status, double percent) {
+
+                        }
+                    });
+                    return null;
                 }
-            });
+            }.execute(myRide);
+
         } catch (Exception e) {
             Toast.makeText(getBaseContext(), "Error \n" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
