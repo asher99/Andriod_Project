@@ -70,7 +70,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         setTheme(R.style.AppTheme);
-
+        try {
+            Thread.sleep(3600);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
@@ -108,9 +112,9 @@ public class MainActivity extends Activity {
                 target.setLatitude(place.getLatLng().latitude);
                 target.setLongitude(place.getLatLng().longitude);
                 String destination = getPlace(target);
-                if(destination.equals("IOException ...")){
-                    Toast.makeText(getBaseContext(), "the destination is not recognized \n\t please try again" , Toast.LENGTH_LONG).show();
-                }else {
+                if (destination.equals("IOException ...")) {
+                    Toast.makeText(getBaseContext(), "the destination is not recognized \n\t please try again", Toast.LENGTH_LONG).show();
+                } else {
                     dest.setText(destination);
                 }
             }
