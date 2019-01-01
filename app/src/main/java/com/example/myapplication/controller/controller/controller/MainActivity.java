@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
+
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +22,8 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -28,6 +31,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -38,17 +42,16 @@ import com.example.myapplication.controller.controller.model.backend.Backend;
 import com.example.myapplication.controller.controller.model.backend.BackendFactory;
 import com.example.myapplication.controller.controller.model.datasource.Firebase_DBManager;
 import com.example.myapplication.controller.controller.model.entities.Ride;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends Activity {
 
-   private PlaceAutocompleteFragment placeAutocompleteFragment1;
+    private PlaceAutocompleteFragment placeAutocompleteFragment1;
 
     private EditText userName;
     private EditText dest;
@@ -122,7 +125,7 @@ public class MainActivity extends Activity {
                 }
             }
 
-           // @Override
+            @Override
             public void onError(Status status) {
 
             }
@@ -184,7 +187,12 @@ public class MainActivity extends Activity {
             if (location.equals("IOException ...")) {
                 throw new Exception("cannot find your location please try later");
             }
-            Ride myRide = new Ride(name, destination, location, phone, email);
+//
+           // String distance = new DecimalFormat("##.##").format(calcDistanceToDestination(destination, location) + " KM");
+            float distance =  calcDistanceToDestination(destination, location);
+            Ride myRide = new Ride(name, destination, location, distance, phone, email);
+
+
             new AsyncTask<Ride, Void, Void>() {
 
                 @Override
@@ -293,6 +301,64 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, "Until you grant the permission, we cannot display the location", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public LatLng getLocationFromAddress(Context context, String inputtedAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng resLatLng = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(inputtedAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            if (address.size() == 0) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            resLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        return resLatLng;
+    }
+
+    public float calcDistanceToDestination(String startLocation, String destination) {
+
+        //String startLocation = ride.getLocation();
+        Context context = getApplicationContext();
+        LatLng latLngLocation = getLocationFromAddress(context, startLocation);
+        double startLatitude = latLngLocation.latitude;
+        double startLongitude = latLngLocation.longitude;
+
+        // String destination = ride.getDestination();
+        LatLng latLngDestination = getLocationFromAddress(context, destination);
+        double endLatitude = latLngDestination.latitude;
+        double endLongitude = latLngDestination.longitude;
+
+        Location locationA = new Location("point A");
+        locationA.setLatitude(startLatitude);
+        locationA.setLongitude(startLongitude);
+
+        Location locationB = new Location("point B");
+        locationB.setLatitude(endLatitude);
+        locationB.setLongitude(endLongitude);
+
+        float distance = locationA.distanceTo(locationB);
+        return (distance / 1000);
+        //return 0.52;
     }
 
     private void checkFieldsInput(View v) {

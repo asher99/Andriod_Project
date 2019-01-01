@@ -12,6 +12,7 @@ public class Ride {
     private String name;
     private String destination;
     private String location;
+    private float lengthOfRide;
     private String phone;
     private String email;
     private ClientRequestStatus status;
@@ -28,10 +29,11 @@ public class Ride {
      * @param phone
      * @param email
      */
-    public Ride(String name, String destination, String loca, String phone, String email) {
+    public Ride(String name, String destination, String loca, float distance, String phone, String email) {
         this.name = name;
         this.destination = destination;
         this.location = loca;
+        this.lengthOfRide = distance;
         this.phone = phone;
         this.email = email;
 
@@ -86,6 +88,14 @@ public class Ride {
      */
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public float getLengthOfRide() {
+        return lengthOfRide;
+    }
+
+    public void setLengthOfRide(float lengthOfRide) {
+        this.lengthOfRide = lengthOfRide;
     }
 
     /**
