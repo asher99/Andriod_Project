@@ -1,5 +1,5 @@
 # Android_Project
-![pickApp](/images/pickApp.jpg)
+<img src="/images/pickApp.jpg" height="200" width="400" >
 
 ## Passanger App <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px">
 
@@ -15,7 +15,7 @@ This request will be sent to all drivers using the driver app via firebase DB.
 </p>
 
 ### Authors
-* Asher Alexander
-* David Salem
+* [Asher Alexander](https://github.com/asher99)
+* [David Salem](https://github.com/dsalem)
 
 The second app for this project can be find in my great partner github account https://github.com/dsalem/driverapp
