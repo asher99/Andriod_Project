@@ -9,7 +9,13 @@ uses google auto-complete api and firebase database.
 ### Description
 The passanger app contains one main activity, after the loading screen the passanger can enter his details and submit a request for a ride.
 This request will be sent to all drivers using the driver app via firebase DB.
-![pickApp](/images/loading.jpg)
-![pickApp](/images/order_ride.jpg)
+<br>
+<a> <img src="/images/loading.jpg" align="left" height="400" width="250" > </a><br>
+<a> <img src="/images/order_ride.jpg" align="left" height="400" width="250" > </a><br>
+
+
+### Authors
+* Asher Alexander
+* David Salem
 
 The second app for this project can be find in my great partner github account https://github.com/dsalem/driverapp
