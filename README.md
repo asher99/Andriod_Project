@@ -18,4 +18,4 @@ This request will be sent to all drivers using the driver app via firebase DB.
 * [Asher Alexander](https://github.com/asher99)
 * [David Salem](https://github.com/dsalem)
 
-The second app for this project can be find in my great partner github account https://github.com/dsalem/driverapp
+The second app for this project can be found in my great partner github account https://github.com/dsalem/driverapp
