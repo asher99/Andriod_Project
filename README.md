@@ -1,13 +1,13 @@
 # Android_Project
 <img src="/images/pickApp.jpg" height="200" width="400" >
 
-## Passanger App <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px">
+## Passenger App <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px">
 
 This app allows a passanger to order a ride,
 uses google auto-complete api and firebase database.
 
 ### Description
-The passanger app contains one main activity, after the loading screen the passanger can enter his details and submit a request for a ride.
+The passenger app contains one main activity, after the loading screen the passenger can enter his details and submit a request for a ride.
 This request will be sent to all drivers using the driver app via firebase DB.
 <p>
   <img src="/images/loading.jpg" height="400" width="250" > <br>
